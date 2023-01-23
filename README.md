@@ -2,16 +2,18 @@
 
 ## How to build Docker container
 
+```
 export PROJECT_ID=<GCP_PROJECT_ID>
 export REGION=europe-west9 # for Paris
 export CONNECTION_NAME=<CLOUD_SQL_CONNECTION> # project_id:region:db_name
-
-
+```
+```
 gcloud builds submit \
   --tag gcr.io/$PROJECT_ID/poll \
   --project $PROJECT_ID
-
+```
 ## How to Deploy
+```
 gcloud run deploy poll \
   --image gcr.io/$PROJECT_ID/poll \
   --platform managed \
@@ -19,7 +21,7 @@ gcloud run deploy poll \
   --allow-unauthenticated \
   --add-cloudsql-instances $CONNECTION_NAME \
   --project $PROJECT_ID \
-
+```
 ## Migrations
 
 Before running the application, execute these schema migration queries
