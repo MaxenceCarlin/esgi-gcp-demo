@@ -13,14 +13,18 @@ gcloud builds submit \
   --project $PROJECT_ID
 ```
 ## How to Deploy
+you cna also use .env variables instead of cloud run variables for development purpose, it is recommended to use secret manager to store sensitive data like passwords
+
 ```
 gcloud run deploy poll \
-  --image gcr.io/$PROJECT_ID/poll \
-  --platform managed \
-  --region $REGION \
-  --allow-unauthenticated \
-  --add-cloudsql-instances $CONNECTION_NAME \
-  --project $PROJECT_ID \
+--image gcr.io/$PROJECT_ID/poll \
+--platform managed \
+--region $REGION \
+--allow-unauthenticated \
+--set-env-vars=DB_USER=esgi,CLOUD_SQL_CONNECTION_NAME=$CONNECTION_NAME,DB_NAME=esgi \
+--add-cloudsql-instances $CONNECTION_NAME \
+--update-secrets=DB_PASS=DB_PASS:latest \ #the name of the secret stored in secret manager (here database password)
+--project $PROJECT_ID \
 ```
 ## Migrations
 
